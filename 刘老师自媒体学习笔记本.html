@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刘老师自媒体学习笔记本</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1c1917;
+    --ink-soft: #44403c;
+    --ink-muted: #78716c;
+    --ink-faint: #a8a29e;
+    --paper: #faf9f7;
+    --paper-warm: #f5f0e8;
+    --paper-rule: #e8e0d5;
+    --accent: #b45309;
+    --accent-light: #fef3c7;
+    --teal: #0f766e;
+    --teal-light: #f0fdf4;
+    --red: #be123c;
+    --red-light: #fff1f2;
+    --blue: #1d4ed8;
+    --blue-light: #eff6ff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .page-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 40px solid rgba(255,255,255,0.05);
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    right: 60px; bottom: -60px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 24px solid rgba(255,255,255,0.04);
+  }
+
+  .header-tag {
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .header-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+
+  .progress-bar-wrap {
+    margin-top: 24px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 100px;
+    height: 4px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 100px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 6px;
+  }
+
+  .nav-tabs {
+    display: flex;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--paper-rule);
+    padding: 0 48px;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all .15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .nav-tab:hover { color: var(--ink); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .main { padding: 36px 48px 80px; max-width: 900px; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+
+  /* Account cards */
+  .account-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .account-card {
+    border: 1px solid var(--paper-rule);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+  }
+
+  .account-card-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+
+  .plat-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+
+  .pi-xhs { background: #e84b4b; }
+  .pi-dy { background: #1c1c1c; }
+  .pi-wx { background: #07c160; }
+  .pi-gzh { background: #576b95; }
+
+  .account-name { font-size: 13px; font-weight: 500; }
+  .account-url { font-size: 11px; color: var(--ink-faint); }
+
+  .account-card-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+  .field-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    letter-spacing: .06em;
+    margin-bottom: 4px;
+  }
+
+  .field-input {
+    width: 100%;
+    border: 1px solid var(--paper-rule);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    resize: none;
+    transition: border-color .15s;
+  }
+
+  .field-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: white;
+  }
+
+  /* Competitor study cards */
+  .competitor-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 28px; }
+
+  .competitor-card {
+    border: 1px solid var(--paper-rule);
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+  }
+
+  .competitor-header {
+    padding: 14px 20px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--paper-rule);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .competitor-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .competitor-title-input {
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--ink);
+    flex: 1;
+    padding: 0;
+  }
+
+  .competitor-title-input:focus { outline: none; }
+  .competitor-title-input::placeholder { color: var(--ink-faint); font-weight: 400; }
+
+  .plat-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .plat-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--paper-rule);
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all .12s;
+    background: white;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .plat-badge.selected-xhs { background: #fff0f0; border-color: #e84b4b; color: #e84b4b; }
+  .plat-badge.selected-dy { background: #f0f0f0; border-color: #1c1c1c; color: #1c1c1c; }
+  .plat-badge.selected-wx { background: #f0fff4; border-color: #07c160; color: #07c160; }
+  .plat-badge.selected-gzh { background: #f0f4ff; border-color: #576b95; color: #576b95; }
+
+  .competitor-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .full-width { grid-column: 1 / -1; }
+
+  .analysis-box {
+    border: 1px solid var(--paper-rule);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--paper);
+  }
+
+  .analysis-box .field-label { margin-bottom: 6px; }
+
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+
+  .learn-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid #fcd34d;
+    cursor: pointer;
+  }
+
+  .learn-tag.avoid {
+    background: var(--red-light);
+    color: var(--red);
+    border-color: #fda4af;
+  }
+
+  .add-tag-btn {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: none;
+    border: 1px dashed var(--paper-rule);
+    color: var(--ink-faint);
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: all .12s;
+  }
+
+  .add-tag-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Platform learning */
+  .platform-sections { display: flex; flex-direction: column; gap: 20px; }
+
+  .plat-learn-card {
+    border: 1px solid var(--paper-rule);
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+  }
+
+  .plat-learn-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--paper-rule);
+    cursor: pointer;
+  }
+
+  .plat-learn-title { font-size: 15px; font-weight: 500; flex: 1; }
+  .plat-status { font-size: 11px; color: var(--ink-faint); }
+
+  .progress-dots { display: flex; gap: 4px; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--paper-rule);
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .dot.done { background: var(--teal); }
+  .dot.current { background: var(--accent); }
+
+  .plat-learn-body { padding: 16px 20px; }
+
+  .checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--paper);
+    border: 1px solid transparent;
+    transition: all .15s;
+    cursor: pointer;
+  }
+
+  .check-item:hover { border-color: var(--paper-rule); background: white; }
+  .check-item.checked { background: var(--teal-light); border-color: #a7f3d0; }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--paper-rule);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+
+  .check-item.checked .check-box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+
+  .check-icon { display: none; }
+  .check-item.checked .check-icon { display: block; }
+
+  .check-text { font-size: 13px; color: var(--ink-soft); flex: 1; }
+  .check-item.checked .check-text { color: var(--teal); }
+
+  .note-area-wrap { margin-top: 6px; }
+
+  .ai-prompt-box {
+    background: var(--blue-light);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 16px;
+  }
+
+  .ai-prompt-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--blue);
+    letter-spacing: .06em;
+    margin-bottom: 8px;
+  }
+
+  .ai-prompt-item {
+    font-size: 12px;
+    color: #1e40af;
+    padding: 4px 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background .12s;
+    padding: 5px 8px;
+    margin: 0 -8px;
+  }
+
+  .ai-prompt-item:hover { background: rgba(37,99,235,0.08); }
+
+  .ai-prompt-copy {
+    font-size: 10px;
+    color: #93c5fd;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Summary section */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .summary-card {
+    border: 1px solid var(--paper-rule);
+    border-radius: 10px;
+    padding: 16px;
+    background: white;
+  }
+
+  .summary-card-label { font-size: 11px; color: var(--ink-faint); margin-bottom: 4px; }
+  .summary-card-val { font-size: 22px; font-weight: 600; font-family: 'Noto Serif SC', serif; color: var(--ink); }
+  .summary-card-sub { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+
+  .insight-area {
+    border: 1px solid var(--paper-rule);
+    border-radius: 12px;
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .insight-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .insight-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+
+  .add-competitor-btn {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px dashed var(--paper-rule);
+    border-radius: 12px;
+    background: none;
+    color: var(--ink-faint);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: all .15s;
+  }
+
+  .add-competitor-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .save-hint {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: white;
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+
+  .save-hint.show { opacity: 1; }
+
+  textarea { resize: vertical; min-height: 70px; }
+
+  @media (max-width: 680px) {
+    .main { padding: 24px 20px 80px; }
+    .page-header { padding: 28px 20px 24px; }
+    .nav-tabs { padding: 0 20px; }
+    .account-grid { grid-template-columns: 1fr; }
+    .competitor-body { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-tag">质量人刘老师 · 自媒体起步</div>
+  <div class="header-title">学习研究笔记本</div>
+  <div class="header-sub">同类账号研究 · 平台运营学习 · 心得总结</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="globalProgress"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">学习进度 0%</div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="switchTab('accounts')">我的账号</button>
+  <button class="nav-tab" onclick="switchTab('competitors')">同类账号研究</button>
+  <button class="nav-tab" onclick="switchTab('platforms')">平台运营学习</button>
+  <button class="nav-tab" onclick="switchTab('summary')">总结与行动</button>
+</div>
+
+<div class="main">
+
+  <!-- Tab 1: 我的账号 -->
+  <div class="section active" id="tab-accounts">
+    <div class="section-title">我的账号基本信息</div>
+    <div class="section-desc">记录各平台账号信息，方便查找和管理。</div>
+
+    <div class="account-grid">
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="plat-icon pi-xhs">红</div>
+          <div>
+            <div class="account-name">小红书</div>
+            <div class="account-url">xiaohongshu.com</div>
+          </div>
+        </div>
+        <div class="account-card-body">
+          <div>
+            <div class="field-label">账号名称</div>
+            <input class="field-input" type="text" placeholder="质量人刘老师" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">账号ID / 链接</div>
+            <input class="field-input" type="text" placeholder="填写后方便分享" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">注册时间</div>
+            <input class="field-input" type="date" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">备注</div>
+            <textarea class="field-input" rows="2" placeholder="简介版本、头像状态等" oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="plat-icon pi-dy">抖</div>
+          <div>
+            <div class="account-name">抖音</div>
+            <div class="account-url">douyin.com</div>
+          </div>
+        </div>
+        <div class="account-card-body">
+          <div>
+            <div class="field-label">账号名称</div>
+            <input class="field-input" type="text" placeholder="质量人刘老师" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">账号ID / 链接</div>
+            <input class="field-input" type="text" placeholder="填写后方便分享" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">注册时间</div>
+            <input class="field-input" type="date" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">备注</div>
+            <textarea class="field-input" rows="2" placeholder="简介版本、头像状态等" oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="plat-icon pi-wx">视</div>
+          <div>
+            <div class="account-name">微信视频号</div>
+            <div class="account-url">weixin.qq.com</div>
+          </div>
+        </div>
+        <div class="account-card-body">
+          <div>
+            <div class="field-label">账号名称</div>
+            <input class="field-input" type="text" placeholder="质量人刘老师" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">视频号ID</div>
+            <input class="field-input" type="text" placeholder="填写后方便分享" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">注册时间</div>
+            <input class="field-input" type="date" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">备注</div>
+            <textarea class="field-input" rows="2" placeholder="是否已关联公众号等" oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="plat-icon pi-gzh">公</div>
+          <div>
+            <div class="account-name">微信公众号</div>
+            <div class="account-url">mp.weixin.qq.com</div>
+          </div>
+        </div>
+        <div class="account-card-body">
+          <div>
+            <div class="field-label">公众号名称</div>
+            <input class="field-input" type="text" placeholder="质量人刘老师" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">微信号</div>
+            <input class="field-input" type="text" placeholder="用于搜索关注" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">注册时间</div>
+            <input class="field-input" type="date" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">备注</div>
+            <textarea class="field-input" rows="2" placeholder="内容类目选择等" oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2: 同类账号研究 -->
+  <div class="section" id="tab-competitors">
+    <div class="section-title">同类账号研究</div>
+    <div class="section-desc">找3-5个同类型账号，分析他们的模式，学习可以借鉴的地方。</div>
+
+    <div class="competitor-list" id="competitorList">
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-num">1</div>
+          <input class="competitor-title-input" type="text" placeholder="账号名称（点击填写）" oninput="autoSave()">
+          <div class="plat-badges">
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-xhs')">小红书</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-dy')">抖音</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-wx')">视频号</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-gzh')">公众号</button>
+          </div>
+        </div>
+        <div class="competitor-body">
+          <div>
+            <div class="field-label">账号链接 / ID</div>
+            <input class="field-input" type="text" placeholder="方便以后查看" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">粉丝量级</div>
+            <input class="field-input" type="text" placeholder="例：5万、20万+" oninput="autoSave()">
+          </div>
+          <div class="full-width">
+            <div class="analysis-box">
+              <div class="field-label">他们主要发什么内容？</div>
+              <textarea class="field-input" rows="2" placeholder="内容类型、话题方向、更新频率..." oninput="autoSave()"></textarea>
+              <div class="tag-row" id="learn-tags-1">
+                <span class="learn-tag">干货知识</span>
+                <span class="learn-tag">职场故事</span>
+                <span class="learn-tag">行业内幕</span>
+                <span class="learn-tag avoid">内容太水</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="analysis-box">
+              <div class="field-label">值得学习的地方</div>
+              <textarea class="field-input" rows="3" placeholder="开场方式、选题角度、互动方式..." oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="analysis-box">
+              <div class="field-label">我能做得更好的地方</div>
+              <textarea class="field-input" rows="3" placeholder="他们缺少什么？我能补充什么？" oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div class="full-width">
+            <div class="field-label">哪条内容表现最好？为什么？</div>
+            <textarea class="field-input" rows="3" placeholder="记录一条让你印象深刻的内容，分析原因..." oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-num">2</div>
+          <input class="competitor-title-input" type="text" placeholder="账号名称（点击填写）" oninput="autoSave()">
+          <div class="plat-badges">
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-xhs')">小红书</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-dy')">抖音</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-wx')">视频号</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-gzh')">公众号</button>
+          </div>
+        </div>
+        <div class="competitor-body">
+          <div>
+            <div class="field-label">账号链接 / ID</div>
+            <input class="field-input" type="text" placeholder="方便以后查看" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">粉丝量级</div>
+            <input class="field-input" type="text" placeholder="例：5万、20万+" oninput="autoSave()">
+          </div>
+          <div class="full-width">
+            <div class="analysis-box">
+              <div class="field-label">他们主要发什么内容？</div>
+              <textarea class="field-input" rows="2" placeholder="内容类型、话题方向、更新频率..." oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="analysis-box">
+              <div class="field-label">值得学习的地方</div>
+              <textarea class="field-input" rows="3" placeholder="开场方式、选题角度、互动方式..." oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="analysis-box">
+              <div class="field-label">我能做得更好的地方</div>
+              <textarea class="field-input" rows="3" placeholder="他们缺少什么？我能补充什么？" oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div class="full-width">
+            <div class="field-label">哪条内容表现最好？为什么？</div>
+            <textarea class="field-input" rows="3" placeholder="记录一条让你印象深刻的内容，分析原因..." oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="competitor-header">
+          <div class="competitor-num">3</div>
+          <input class="competitor-title-input" type="text" placeholder="账号名称（点击填写）" oninput="autoSave()">
+          <div class="plat-badges">
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-xhs')">小红书</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-dy')">抖音</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-wx')">视频号</button>
+            <button class="plat-badge" onclick="toggleBadge(this,'selected-gzh')">公众号</button>
+          </div>
+        </div>
+        <div class="competitor-body">
+          <div>
+            <div class="field-label">账号链接 / ID</div>
+            <input class="field-input" type="text" placeholder="方便以后查看" oninput="autoSave()">
+          </div>
+          <div>
+            <div class="field-label">粉丝量级</div>
+            <input class="field-input" type="text" placeholder="例：5万、20万+" oninput="autoSave()">
+          </div>
+          <div class="full-width">
+            <div class="analysis-box">
+              <div class="field-label">他们主要发什么内容？</div>
+              <textarea class="field-input" rows="2" placeholder="内容类型、话题方向、更新频率..." oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="analysis-box">
+              <div class="field-label">值得学习的地方</div>
+              <textarea class="field-input" rows="3" oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="analysis-box">
+              <div class="field-label">我能做得更好的地方</div>
+              <textarea class="field-input" rows="3" oninput="autoSave()"></textarea>
+            </div>
+          </div>
+          <div class="full-width">
+            <div class="field-label">哪条内容表现最好？为什么？</div>
+            <textarea class="field-input" rows="3" oninput="autoSave()"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="add-competitor-btn" onclick="addCompetitor()">+ 添加更多账号（最多5个）</button>
+  </div>
+
+  <!-- Tab 3: 平台运营学习 -->
+  <div class="section" id="tab-platforms">
+    <div class="section-title">平台运营学习</div>
+    <div class="section-desc">逐个平台学习，打勾代表已掌握，写下心得加深记忆。</div>
+
+    <div class="platform-sections">
+
+      <!-- 小红书 -->
+      <div class="plat-learn-card">
+        <div class="plat-learn-header">
+          <div class="plat-icon pi-xhs" style="width:26px;height:26px;font-size:12px">红</div>
+          <div class="plat-learn-title">小红书</div>
+          <div class="progress-dots" id="dots-xhs">
+            <div class="dot" onclick="setDot('xhs',0)"></div>
+            <div class="dot" onclick="setDot('xhs',1)"></div>
+            <div class="dot" onclick="setDot('xhs',2)"></div>
+            <div class="dot" onclick="setDot('xhs',3)"></div>
+            <div class="dot" onclick="setDot('xhs',4)"></div>
+          </div>
+        </div>
+        <div class="plat-learn-body">
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">了解小红书的用户群体：以年轻女性为主，但制造业/职场内容近年增长快</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会发图文笔记：标题要有钩子，配图要清晰，正文要分段，结尾要互动</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会看数据：查看阅读量、点赞、收藏、评论——收藏高说明内容有用</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会用话题标签：每篇加3-5个相关话题，帮助系统分发给对的人</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会回复评论：粉丝留言要及时回，评论区是建立信任感的重要地方</div>
+            </div>
+          </div>
+          <div class="field-label">我的学习心得</div>
+          <textarea class="field-input" rows="3" placeholder="写下使用小红书的感受，遇到的问题，或者让你觉得有收获的发现..." oninput="autoSave()"></textarea>
+          <div class="ai-prompt-box">
+            <div class="ai-prompt-label">可以问AI的问题（复制去问Claude）</div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              小红书上做制造业/质量管理内容的博主，哪些内容类型最容易被推荐？给我分析一下规律
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              帮我分析一篇小红书爆款笔记的结构，我想学习它的写法
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              小红书的话题标签怎么选？质量管理方向应该用哪些标签
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 抖音 -->
+      <div class="plat-learn-card">
+        <div class="plat-learn-header">
+          <div class="plat-icon pi-dy" style="width:26px;height:26px;font-size:12px">抖</div>
+          <div class="plat-learn-title">抖音</div>
+          <div class="progress-dots" id="dots-dy">
+            <div class="dot" onclick="setDot('dy',0)"></div>
+            <div class="dot" onclick="setDot('dy',1)"></div>
+            <div class="dot" onclick="setDot('dy',2)"></div>
+            <div class="dot" onclick="setDot('dy',3)"></div>
+            <div class="dot" onclick="setDot('dy',4)"></div>
+          </div>
+        </div>
+        <div class="plat-learn-body">
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">了解抖音算法：前3秒最关键，完播率决定推荐量，先给100人看再逐步扩大</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会竖屏录制：手机竖拿，人在画面中间偏上，头顶留一点空间</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会发布视频：选封面、写标题、加话题标签、选发布时间（早9点/晚8点最佳）</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会看创作者中心数据：播放量、完播率、点赞评论——完播率低说明开头要改</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会加自动字幕：发布页面有「自动字幕」功能，开启后系统自动生成，检查一遍准确度</div>
+            </div>
+          </div>
+          <div class="field-label">我的学习心得</div>
+          <textarea class="field-input" rows="3" placeholder="写下使用抖音的感受，或者刷到让你觉得「这个做得好」的内容，记下来分析..." oninput="autoSave()"></textarea>
+          <div class="ai-prompt-box">
+            <div class="ai-prompt-label">可以问AI的问题</div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              抖音上知识类博主的开场白，有哪些常见的高效钩子公式？给我举5个例子
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              帮我分析：为什么有些视频播放量高但粉丝涨得少？我应该怎么改进
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              抖音封面图怎么设计才能让人看了想点进来？质量管理方向的博主适合什么风格
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 视频号 -->
+      <div class="plat-learn-card">
+        <div class="plat-learn-header">
+          <div class="plat-icon pi-wx" style="width:26px;height:26px;font-size:12px">视</div>
+          <div class="plat-learn-title">微信视频号</div>
+          <div class="progress-dots" id="dots-wx">
+            <div class="dot" onclick="setDot('wx',0)"></div>
+            <div class="dot" onclick="setDot('wx',1)"></div>
+            <div class="dot" onclick="setDot('wx',2)"></div>
+            <div class="dot" onclick="setDot('wx',3)"></div>
+            <div class="dot" onclick="setDot('wx',4)"></div>
+          </div>
+        </div>
+        <div class="plat-learn-body">
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">了解视频号特点：依托微信熟人圈，朋友点赞会被看到，私域传播是最大优势</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会发布视频：在微信里进视频号，点右上角「+」发布，可以同步到朋友圈</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">完成关联公众号：视频号设置→关联公众号，视频可以挂载公众号文章</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会转发到朋友圈：发布后在右下角分享，选「发到朋友圈」，第一波流量来自老朋友</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会看数据：视频号助手（微信搜索「视频号助手」）可以看播放量和粉丝增长</div>
+            </div>
+          </div>
+          <div class="field-label">我的学习心得</div>
+          <textarea class="field-input" rows="3" placeholder="视频号和抖音有什么不一样？哪里让你觉得更顺手或者更难用？" oninput="autoSave()"></textarea>
+          <div class="ai-prompt-box">
+            <div class="ai-prompt-label">可以问AI的问题</div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              微信视频号和抖音内容可以通用吗？有什么需要调整的地方
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              视频号如何利用微信熟人圈快速积累第一批粉丝？有哪些具体操作方法
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 公众号 -->
+      <div class="plat-learn-card">
+        <div class="plat-learn-header">
+          <div class="plat-icon pi-gzh" style="width:26px;height:26px;font-size:12px">公</div>
+          <div class="plat-learn-title">微信公众号</div>
+          <div class="progress-dots" id="dots-gzh">
+            <div class="dot" onclick="setDot('gzh',0)"></div>
+            <div class="dot" onclick="setDot('gzh',1)"></div>
+            <div class="dot" onclick="setDot('gzh',2)"></div>
+            <div class="dot" onclick="setDot('gzh',3)"></div>
+            <div class="dot" onclick="setDot('gzh',4)"></div>
+          </div>
+        </div>
+        <div class="plat-learn-body">
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">了解公众号定位：适合长文章、深度内容，是建立专业权威感的最好平台</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会在后台写文章：登录 mp.weixin.qq.com，点「新建图文」，写完预览没问题再发</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会群发文章：点「发表」后选「群发给所有粉丝」，每天只能群发1次</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">学会看阅读数据：后台「内容与互动」→「图文分析」，可以看每篇的阅读量和转发量</div>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+              <div class="check-box"><svg class="check-icon" width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="check-text">设置自动回复：后台「自动回复」，新粉丝关注后自动收到欢迎语</div>
+            </div>
+          </div>
+          <div class="field-label">我的学习心得</div>
+          <textarea class="field-input" rows="3" placeholder="公众号后台用起来感觉怎么样？哪个功能让你觉得有用或者不好理解？" oninput="autoSave()"></textarea>
+          <div class="ai-prompt-box">
+            <div class="ai-prompt-label">可以问AI的问题</div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              帮我写一条公众号新粉丝自动回复的欢迎语，账号叫「质量人刘老师」，做质量管理方向
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              公众号文章的标题有哪些让人想点进去看的写法？给我举质量管理方向的例子
+            </div>
+            <div class="ai-prompt-item" onclick="copyPrompt(this)">
+              <span class="ai-prompt-copy">复制</span>
+              我写了一篇公众号文章，帮我看看排版和标题有没有可以改进的地方
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tab 4: 总结与行动 -->
+  <div class="section" id="tab-summary">
+    <div class="section-title">总结与下一步行动</div>
+    <div class="section-desc">研究了这些账号之后，整理最重要的收获，确定自己的方向。</div>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-card-label">研究了几个账号</div>
+        <div class="summary-card-val" id="count-accounts">0</div>
+        <div class="summary-card-sub">目标：3–5个</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-label">平台学习完成度</div>
+        <div class="summary-card-val" id="count-checks">0%</div>
+        <div class="summary-card-sub">共20个学习点</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-label">本周计划发布</div>
+        <div class="summary-card-val"><input type="number" min="0" max="10" value="0" style="width:48px;border:none;background:none;font-size:22px;font-weight:600;font-family:'Noto Serif SC',serif;color:var(--ink);padding:0" oninput="autoSave()"></div>
+        <div class="summary-card-sub">条内容</div>
+      </div>
+    </div>
+
+    <div class="insight-area">
+      <div class="insight-title">
+        <div class="insight-dot" style="background:var(--accent)"></div>
+        研究完这些账号之后，我最大的收获是
+      </div>
+      <textarea class="field-input" rows="4" placeholder="你发现了什么规律？什么让你觉得「原来可以这样做」？" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="insight-area">
+      <div class="insight-title">
+        <div class="insight-dot" style="background:var(--teal)"></div>
+        和他们相比，我的差异化优势是
+      </div>
+      <textarea class="field-input" rows="4" placeholder="什么是只有我能说的？我的经历、我的视角、我的风格——哪里是别人替代不了的？" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="insight-area">
+      <div class="insight-title">
+        <div class="insight-dot" style="background:var(--blue)"></div>
+        我接下来要做的3件事
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-faint);flex-shrink:0">01</span>
+          <input class="field-input" type="text" placeholder="最重要的一件事..." oninput="autoSave()">
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-faint);flex-shrink:0">02</span>
+          <input class="field-input" type="text" placeholder="第二件事..." oninput="autoSave()">
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-faint);flex-shrink:0">03</span>
+          <input class="field-input" type="text" placeholder="第三件事..." oninput="autoSave()">
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-area">
+      <div class="insight-title">
+        <div class="insight-dot" style="background:var(--ink-faint)"></div>
+        学习过程中遇到的困难，想问女儿的问题
+      </div>
+      <textarea class="field-input" rows="4" placeholder="哪里没搞明白？哪里用着不顺手？写下来，下次见面或者微信问女儿..." oninput="autoSave()"></textarea>
+    </div>
+
+  </div>
+</div>
+
+<div class="save-hint" id="saveHint">已自动保存</div>
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+    updateStats();
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    updateStats();
+    autoSave();
+  }
+
+  function toggleBadge(el, cls) {
+    const classes = ['selected-xhs','selected-dy','selected-wx','selected-gzh'];
+    if (el.classList.contains(cls)) {
+      el.classList.remove(cls);
+    } else {
+      classes.forEach(c => el.classList.remove(c));
+      el.classList.add(cls);
+    }
+    autoSave();
+  }
+
+  function setDot(platform, index) {
+    const dots = document.querySelectorAll('#dots-' + platform + ' .dot');
+    dots.forEach((d, i) => {
+      d.classList.remove('done', 'current');
+      if (i < index) d.classList.add('done');
+      else if (i === index) d.classList.add('current');
+    });
+    updateStats();
+    autoSave();
+  }
+
+  let competitorCount = 3;
+  function addCompetitor() {
+    if (competitorCount >= 5) return;
+    competitorCount++;
+    const list = document.getElementById('competitorList');
+    const card = document.createElement('div');
+    card.className = 'competitor-card';
+    card.innerHTML = `
+      <div class="competitor-header">
+        <div class="competitor-num">${competitorCount}</div>
+        <input class="competitor-title-input" type="text" placeholder="账号名称（点击填写）" oninput="autoSave()">
+        <div class="plat-badges">
+          <button class="plat-badge" onclick="toggleBadge(this,'selected-xhs')">小红书</button>
+          <button class="plat-badge" onclick="toggleBadge(this,'selected-dy')">抖音</button>
+          <button class="plat-badge" onclick="toggleBadge(this,'selected-wx')">视频号</button>
+          <button class="plat-badge" onclick="toggleBadge(this,'selected-gzh')">公众号</button>
+        </div>
+      </div>
+      <div class="competitor-body">
+        <div><div class="field-label">账号链接 / ID</div><input class="field-input" type="text" placeholder="方便以后查看" oninput="autoSave()"></div>
+        <div><div class="field-label">粉丝量级</div><input class="field-input" type="text" placeholder="例：5万、20万+" oninput="autoSave()"></div>
+        <div class="full-width"><div class="analysis-box"><div class="field-label">他们主要发什么内容？</div><textarea class="field-input" rows="2" placeholder="内容类型、话题方向、更新频率..." oninput="autoSave()"></textarea></div></div>
+        <div><div class="analysis-box"><div class="field-label">值得学习的地方</div><textarea class="field-input" rows="3" oninput="autoSave()"></textarea></div></div>
+        <div><div class="analysis-box"><div class="field-label">我能做得更好的地方</div><textarea class="field-input" rows="3" oninput="autoSave()"></textarea></div></div>
+        <div class="full-width"><div class="field-label">哪条内容表现最好？为什么？</div><textarea class="field-input" rows="3" oninput="autoSave()"></textarea></div>
+      </div>`;
+    list.appendChild(card);
+    updateStats();
+  }
+
+  function copyPrompt(el) {
+    const text = el.textContent.replace('复制','').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = el.querySelector('.ai-prompt-copy').textContent;
+      el.querySelector('.ai-prompt-copy').textContent = '已复制';
+      setTimeout(() => { el.querySelector('.ai-prompt-copy').textContent = orig; }, 1500);
+    });
+  }
+
+  function updateStats() {
+    const checks = document.querySelectorAll('.check-item.checked').length;
+    const total = document.querySelectorAll('.check-item').length;
+    const pct = total > 0 ? Math.round(checks / total * 100) : 0;
+
+    const filledCompetitors = document.querySelectorAll('.competitor-title-input');
+    let filled = 0;
+    filledCompetitors.forEach(i => { if(i.value.trim()) filled++; });
+
+    const el = document.getElementById('count-accounts');
+    if (el) el.textContent = filled;
+    const el2 = document.getElementById('count-checks');
+    if (el2) el2.textContent = pct + '%';
+
+    const bar = document.getElementById('globalProgress');
+    const label = document.getElementById('progressLabel');
+    if (bar) bar.style.width = pct + '%';
+    if (label) label.textContent = '学习进度 ' + pct + '%';
+  }
+
+  let saveTimer;
+  function autoSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      const hint = document.getElementById('saveHint');
+      hint.classList.add('show');
+      setTimeout(() => hint.classList.remove('show'), 2000);
+      updateStats();
+    }, 800);
+  }
+
+  updateStats();
+</script>
+</body>
+</html>
